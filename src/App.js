@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import  { Text } from './text.js';
 import Web3 from 'web3';
-import { Crowdfund } from './contract/transact.js';
+import { Campaign, Cancel, Claim, Pledge, Refund, Unpledge } from './ContractFunctions';
 
 //ID IS 1
 //DEPLOY ONE CAMPAIGN AND TEST FROM THERE, KEEP TRACK AS YOU GO
 function App() {
   const [walletAddress, setWalletAddress] = useState("");
-  const [truncatedWallet, setTruncatedWallet] = useState("");
-
-
-  const web3 = new Web3(new 
-    Web3.providers.HttpProvider("http://localhost:3000"));
-
 
   async function requestAccount(){    
     if(window.ethereum){
@@ -21,7 +15,6 @@ function App() {
       });
       console.log(accounts);
       setWalletAddress(accounts[0]);
-      setTruncatedWallet(accounts[0].substring(0,4) + "...");
     }
     else{
       alert('Metamask not detected');
@@ -33,9 +26,7 @@ function App() {
   }
 
   async function create(){
-    let time = Math.floor(Date.now/1000);
-    let end = new Date((new Date()).getTime() + (10 * 86400000)); 
-    await Crowdfund.methods.launch(100000, time, end);
+    
   }
 
   async function pledge(){
@@ -63,19 +54,24 @@ function App() {
     >
       Your Wallet Address is: {walletAddress}
     </Text>
-    <button>
+    <button
+    onClick={() => Campaign()}>
       Create a Campaign!
     </button>
-    <button>
+    <button
+    onClick={() => Pledge()}>
       Pledge
     </button>
-    <button>
+    <button
+    onClick={() => Unpledge()}>
       Unpledge
     </button>
-    <button>
+    <button
+    onClick={() => Cancek()}>
       Cancel
     </button>
-    <button>
+    <button
+    onClick={() => Refund()}>
       Refund
     </button>
     </>
