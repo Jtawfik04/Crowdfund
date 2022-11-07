@@ -21,6 +21,8 @@ function App() {
     } 
   }
 
+  console.log("test");
+
   async function hideAccount(){
     setWalletAddress("");
   }
